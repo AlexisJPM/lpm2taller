@@ -2,8 +2,9 @@ import { createStackNavigator } from '@react-navigation/stack';
 import LoginScreen from '../screens/LoginScreen';
 import RegistroScreen from '../screens/RegistroScreen';
 import HomeScreen from '../screens/HomeScreen';
+import { NavigationContainer } from '@react-navigation/native';
 
-const Stack = StackNavigator();
+const Stack = createStackNavigator()
 
 function MyStack() {
     return (
@@ -14,3 +15,12 @@ function MyStack() {
         </Stack.Navigator>
     );
 }
+
+export default function StackNav() {
+    return (
+        <NavigationContainer>
+            <MyStack />
+        </NavigationContainer>
+    )
+}
+
