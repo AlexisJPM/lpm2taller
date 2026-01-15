@@ -12,7 +12,7 @@ export default function HomeScreen(  {navigation} : any  ) {
     <TouchableOpacity onPress={()=> navigation.navigate("Login")}
       style = {styles.btnLocal}
       >
-      <Text style={{fontSize: 30}}>Local</Text>
+      <Text style={{fontSize: 30}}>Login</Text>
       
     </TouchableOpacity>
 
@@ -20,7 +20,7 @@ export default function HomeScreen(  {navigation} : any  ) {
       style = {styles.btnExterno}
       >
 
-        <Text style={{fontSize : 30}}>Externo</Text>
+        <Text style={{fontSize : 30}}>Registarse</Text>
 
 
     </TouchableOpacity>
@@ -62,6 +62,5 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    height: 100
   }
 })

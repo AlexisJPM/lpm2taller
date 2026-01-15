@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 
 export default function LoginScreen() {
@@ -14,8 +14,9 @@ export default function LoginScreen() {
     <View 
     style={styles.container}>
 
+<Image style={styles.usuario} source={{uri : "https://i.postimg.cc/7hQwDzBS/perfil-del-usuario.png"}}/>
         <View >
-            <Text style={styles.text}>Registrar Juego</Text>
+            <Text style={styles.text}>Registro de Usuario</Text>
             </View>
       
 
@@ -66,11 +67,13 @@ const styles = StyleSheet.create({
         fontSize: 12,
         margin: 5,
         height: 50,
+        width: 300,
         borderRadius: 5
     },
     container: {
-        justifyContent: "center",
-        marginTop: 50,
+      
+    justifyContent: 'center',
+    alignItems: 'center',
         
     },
     text:{
@@ -79,11 +82,17 @@ const styles = StyleSheet.create({
         
     },
     button:{
-        borderRadius: 5,
-        backgroundColor: "#1665f8",
-        margin : 5,
-        height: 50,
-        
-        justifyContent: "center",
+        backgroundColor : "#0051ffa1",
+    height: 50,
+    width : "50%",
+    flexDirection:"row",
+    borderRadius: 15,
+    alignItems :'center',
+    justifyContent : 'center'
     },
+    usuario:{
+      width: 145,
+      height: 150,
+      marginTop: 50
+    }
    })

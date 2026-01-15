@@ -16,7 +16,8 @@ const Tab = createBottomTabNavigator();
 function MyStack() {
     return (
         <Stack.Navigator >
-            <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="Home" component={HomeScreen}
+             options={{headerShown : false}} />
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Registro" component={RegistroScreen} />
             <Stack.Screen name="BottonTab" component={MyTabs} options={{headerShown:false}}/>
