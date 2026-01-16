@@ -16,45 +16,25 @@ export default function LoginScreen() {
 
 <Image style={styles.usuario} source={{uri : "https://i.postimg.cc/7hQwDzBS/perfil-del-usuario.png"}}/>
         <View >
-            <Text style={styles.text}>Registro de Usuario</Text>
+            <Text style={styles.text}>Login</Text>
             </View>
       
 
   <TextInput
-    placeholder='Ingresar ide'
+    placeholder='Ingrese su correo'
 style={styles.input}
-onChangeText={(texto)=> setid(texto) }
+onChangeText={(texto)=> setcorreo(texto) }
 value = {id}
   />
    <TextInput
-placeholder='Ingrese su nombre'
-style={styles.input}
-onChangeText={(texto)=> setnombre(texto) }
-value = {nombre}
-   />
-    <TextInput
-placeholder='Cree su contraseña'
+placeholder='Ingrese su contraseña'
 style={styles.input}
 onChangeText={(texto)=> setcontrasenia(texto) }
-value = {contrasenia}
-
-    />
-     <TextInput
-placeholder='Ingresar su correo'
-style={styles.input}
-onChangeText={(texto)=> setcorreo(texto) }
-value= {correo}
-     />
-       <TextInput
-placeholder='Ingresar su edad'
-style={styles.input}
-onChangeText={(texto)=> setedad(+texto) }
-value= {edad.toString()}
-keyboardType='numeric'
-     />
+value = {nombre}
+   />
 
     <TouchableOpacity style = {styles.button} >
-        <Text >Guardar</Text>
+        <Text >Ingresar</Text>
     </TouchableOpacity>
     </View>
   )
