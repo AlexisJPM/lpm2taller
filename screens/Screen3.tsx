@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
-export default function ScoreScreen() {
+export default function Screen3() {
   return (
     <View>
-      <Text>ScoreScreen</Text>
+      <Text>Screen3</Text>
     </View>
   )
 }

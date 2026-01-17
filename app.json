@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "app_taller",
-    "slug": "app_taller",
+    "name": "app_evaluacion",
+    "slug": "app_evaluacion",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
