@@ -17,10 +17,10 @@ function MyStack() {
     return (
         <Stack.Navigator >
             <Stack.Screen name="Home" component={HomeScreen}
-             options={{headerShown : false}} />
+                options={{ headerShown: false }} />
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Registro" component={RegistroScreen} />
-            <Stack.Screen name="BottonTab" component={MyTabs} options={{headerShown:false}}/>
+            <Stack.Screen name="BottonTab" component={MyTabs} options={{ headerShown: false }} />
         </Stack.Navigator>
     );
 }
@@ -28,9 +28,9 @@ function MyStack() {
 function MyTabs() {
     return (
         <Tab.Navigator>
-            <Tab.Screen name="Game" component={GameScreen} />
-            <Tab.Screen name="Score" component={ScoreScreen} />
-            <Tab.Screen name="Perfil" component={PerfilScreen} />
+            <Tab.Screen name="Perfil" component={PerfilScreen} options={{ headerShown: false }}/>
+            <Tab.Screen name="Game" component={GameScreen} options={{ headerShown: false }}/>
+            <Tab.Screen name="Score" component={ScoreScreen} options={{ headerShown: false }}/>
         </Tab.Navigator>
     );
 }

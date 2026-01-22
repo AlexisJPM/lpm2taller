@@ -22,7 +22,6 @@ export default function HomeScreen(  {navigation} : any  ) {
 
         <Text style={{fontSize : 30}}>Registarse</Text>
 
-
     </TouchableOpacity>
 
     </ImageBackground>
