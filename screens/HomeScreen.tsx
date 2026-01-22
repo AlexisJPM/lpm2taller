@@ -43,7 +43,8 @@ const styles = StyleSheet.create({
     flexDirection:"row",
     borderRadius: 15,
     alignItems :'center',
-    justifyContent : 'center'
+    justifyContent : 'center',
+    margin:20,
   },
   imgExterno:{
     height:60,
