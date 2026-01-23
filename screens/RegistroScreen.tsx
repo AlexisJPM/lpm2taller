@@ -3,21 +3,22 @@ import React, { useState } from 'react'
 import { supabase } from '../supabase/config'
 
 export default function RegistroScreen() {
-    const [cedula, setcedula] = useState("")
+    
     const [nombre, setnombre] = useState("")
-    const [contrasenia, setcontrasenia] = useState("")
-    const [correo, setcorreo] = useState("")
+   const [password, setpassword] = useState("")
+     const [email, setemail] = useState("")
     const [edad, setedad] = useState(0)
 
     async function guardar() {
         const { error } = await supabase
             .from('usuario')
             .insert({
-                cedula: cedula,
-                nombre: nombre,
-                contrasenia: contrasenia,
-                correo: correo,
-                edad: edad
+               uid : uid,
+    nombre: nombre, 
+    password: password ,
+    email: correo,
+    email : email,
+    edad: edad
             })
         console.log(error);
 
