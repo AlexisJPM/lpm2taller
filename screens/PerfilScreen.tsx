@@ -24,11 +24,7 @@ export default function PerfilScreen({ navigation }: any) {
 
   async function datosUser(uid: any) {
     const { data, error } = await supabase
-<<<<<<< HEAD
       .from('juador')
-=======
-      .from('usuario') 
->>>>>>> 71ad2d33fabda83ca1d77b51a99e8ff4c2b8fdf9
       .select()
       .eq('uid', uid)
 

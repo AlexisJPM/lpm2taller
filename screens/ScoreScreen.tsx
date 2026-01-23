@@ -41,7 +41,7 @@ export default function ScoreScreen({ navigation }: any) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Mejores puntuaciones</Text>
+      <Text style={styles.title}>Mejores Score</Text>
 
       <View style={styles.card}>
         <View style={styles.row}>
