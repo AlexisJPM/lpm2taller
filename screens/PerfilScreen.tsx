@@ -7,7 +7,6 @@ export default function PerfilScreen({ navigation }: any) {
 
   type usuario = {
     nombre: String,
-    ci: number,
     edad: number,
     email: string
   }
@@ -25,7 +24,7 @@ export default function PerfilScreen({ navigation }: any) {
 
   async function datosUser(uid: any) {
     const { data, error } = await supabase
-      .from('juador') 
+      .from('usuario') 
       .select()
       .eq('uid', uid)
     
@@ -58,10 +57,6 @@ export default function PerfilScreen({ navigation }: any) {
           <Text style={styles.value}>{user.nombre}</Text>
         </View>
 
-        <View style={styles.row}>
-          <Text style={styles.label}>Cédula:</Text>
-          <Text style={styles.value}>{user.ci}</Text>
-        </View>
 
         <View style={styles.row}>
           <Text style={styles.label}>Edad:</Text>
