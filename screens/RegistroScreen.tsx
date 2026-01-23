@@ -36,7 +36,6 @@ guardar( data.user.id)
             .insert({
             uid : uid,
     nombre: nombre, 
-    password: password ,
     email : email,
     edad: edad
             })
