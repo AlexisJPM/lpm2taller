@@ -70,6 +70,7 @@ guardar( data.user.id)
                 style={styles.input}
                 onChangeText={(texto) => setpassword(texto)}
                 value={password}
+                
 
             />
             <TextInput
