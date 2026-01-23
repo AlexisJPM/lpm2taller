@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 
 const { width, height } = Dimensions.get('window');
 
-export default function ScoreScreen() {
+export default function GameScreen() {
   const [score, setScore] = useState(0);
   const [bugPosition, setBugPosition] = useState({ x: 0, y: 0 });
   const [showBug, setShowBug] = useState(false);
