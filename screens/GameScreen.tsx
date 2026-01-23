@@ -12,6 +12,7 @@ export default function ScoreScreen() {
   const spawnBug = () => {
     const randomX = Math.floor(Math.random() * (width - 100));
     const randomY = Math.floor(Math.random() * (height - 150));
+    
     setBugPosition({ x: randomX, y: randomY });
     setShowBug(true);
   };

@@ -7,7 +7,6 @@ export default function ScoreScreen({ navigation }: any) {
 
   type usuario = {
     nombre: String,
-    ci: number,
     edad: number,
     email: string
   }
@@ -25,7 +24,7 @@ export default function ScoreScreen({ navigation }: any) {
 
   async function datosUser(uid: any) {
     const { data, error } = await supabase
-      .from('juador') // Verifica si es 'jugador' o 'juador' en tu DB
+      .from('usuario') // Verifica si es 'jugador' o 'juador' en tu DB
       .select()
       .eq('uid', uid)
     
@@ -61,6 +60,7 @@ export default function ScoreScreen({ navigation }: any) {
           <Text style={styles.value}>{user.edad} años</Text>
         </View>
       </View>
+      
 
     </View>
   )

@@ -37,6 +37,7 @@ export default function PerfilScreen({ navigation }: any) {
     const { error } = await supabase.auth.signOut()
     if (!error) {
       navigation.navigate("Login")
+      
     }
   }
 

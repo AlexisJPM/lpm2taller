@@ -10,6 +10,7 @@ export default function HomeScreen(  {navigation} : any  ) {
       <Text style={{color: 'white', fontSize: 40}}>Bienvenido</Text>
 
     <TouchableOpacity onPress={()=> navigation.navigate("Login")}
+    
       style = {styles.btnLocal}
       >
       <Text style={{fontSize: 30}}>Login</Text>

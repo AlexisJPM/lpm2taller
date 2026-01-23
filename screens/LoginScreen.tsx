@@ -10,6 +10,7 @@ async function login(){
   const { data, error } = await supabase.auth.signInWithPassword({
   email: email,
   password: password,
+  
 })
 if(data.session != null){
   
