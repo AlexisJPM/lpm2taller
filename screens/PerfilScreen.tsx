@@ -25,10 +25,10 @@ export default function PerfilScreen({ navigation }: any) {
 
   async function datosUser(uid: any) {
     const { data, error } = await supabase
-      .from('juador') 
+      .from('juador')
       .select()
       .eq('uid', uid)
-    
+
     if (data && data.length > 0) {
       setuser(data[0])
     }
@@ -46,9 +46,9 @@ export default function PerfilScreen({ navigation }: any) {
       <Text style={styles.title}>Perfil de Jugador</Text>
 
       <View style={styles.imageContainer}>
-        <Image 
-          style={styles.img} 
-          source={{ uri: "https://i.postimg.cc/NG4L2FNx/selfie.png" }} 
+        <Image
+          style={styles.img}
+          source={{ uri: "https://i.postimg.cc/NG4L2FNx/selfie.png" }}
         />
       </View>
 
