@@ -3,21 +3,40 @@ import { Alert, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } fro
 import React, { useState } from 'react'
 import { supabase } from '../supabase/config'
 
-export default function RegistroScreen() {
+export default function RegistroScreen({navigation} : any) {
     
     const [nombre, setnombre] = useState("")
    const [password, setpassword] = useState("")
      const [email, setemail] = useState("")
     const [edad, setedad] = useState(0)
 
-    async function guardar() {
+
+async function registro(){
+    const { data, error } = await supabase.auth.signUp({
+     email: email,
+    password: password,
+})
+
+
+if(data.user != null){
+navigation.navigate("Login")
+guardar( data.user.id)
+}else{
+    console.log(error);
+      
+      Alert.alert("Error", error?.message)
+}
+
+
+  }
+
+    async function guardar(uid : string) {
         const { error } = await supabase
             .from('usuario')
             .insert({
-               uid : uid,
+            uid : uid,
     nombre: nombre, 
     password: password ,
-    email: correo,
     email : email,
     edad: edad
             })
@@ -34,13 +53,6 @@ export default function RegistroScreen() {
                 <Text style={styles.text}>Registro de Usuario</Text>
             </View>
 
-
-            <TextInput
-                placeholder='Ingresar su cedula'
-                style={styles.input}
-                onChangeText={(texto) => setcedula(texto)}
-                value={cedula}
-            />
             <TextInput
                 placeholder='Ingrese su nombre'
                 style={styles.input}
@@ -57,19 +69,19 @@ export default function RegistroScreen() {
             <TextInput
                 placeholder='Cree su contraseña'
                 style={styles.input}
-                onChangeText={(texto) => setcontrasenia(texto)}
-                value={contrasenia}
+                onChangeText={(texto) => setpassword(texto)}
+                value={password}
 
             />
             <TextInput
                 placeholder='Ingresar su correo'
                 style={styles.input}
-                onChangeText={(texto) => setcorreo(texto)}
-                value={correo}
+                onChangeText={(texto) => setemail(texto)}
+                value={email}
             />
 
 
-            <TouchableOpacity style={styles.button} onPress={guardar} >
+            <TouchableOpacity style={styles.button} onPress={registro} >
                 <Text >Guardar</Text>
             </TouchableOpacity>
         </View>
