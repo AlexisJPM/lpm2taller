@@ -1,6 +1,8 @@
 import { StyleSheet, Text, Image, View, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { supabase } from '../supabase/config'
+import * as SecureStore from 'expo-secure-store';
+
 
 export default function PerfilScreen({ navigation }: any) {
   const [user, setuser] = useState({} as usuario)
@@ -35,9 +37,9 @@ export default function PerfilScreen({ navigation }: any) {
 
   async function cerrarSesion() {
     const { error } = await supabase.auth.signOut()
-    if (!error) {
-      navigation.navigate("Login")
-    }
+    await SecureStore.deleteItemAsync('token')
+
+    navigation.navigate("Home")
   }
 
   return (
