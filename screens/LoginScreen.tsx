@@ -13,7 +13,6 @@ export default function LoginScreen({navigation} : any) {
   }, [])
   
 
-
   async function login(){
   const { data, error } = await supabase.auth.signInWithPassword({
   email: email,
@@ -39,7 +38,7 @@ if(data.session != null){
 
   if ( resultadoAuth.success ){
     console.log("Login biometrico exitosos");
-    navigation.navigate("Perfil")
+    navigation.navigate("BottonTab")
     
   }else{
     console.log("error biometrico");
