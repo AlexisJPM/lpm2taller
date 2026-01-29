@@ -89,7 +89,7 @@ console.log(token);
       />
 
       <TouchableOpacity style={styles.button} onPress={() => login()} >
-        <Text >Ingresar</Text>
+        <Text style={{fontSize: 20, fontFamily:'juego'}}>Ingresar</Text>
       </TouchableOpacity>
     </View>
   );
@@ -117,7 +117,8 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 25,
     justifyContent: "center",
-    margin: 20
+    margin: 20,
+    fontFamily:'juego'
 
   },
   button: {

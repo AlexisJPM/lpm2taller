@@ -1,8 +1,11 @@
 import { Dimensions, ImageBackground, Image, StyleSheet, Text, TouchableOpacity, View, Alert } from 'react-native'
 import React, { useEffect, useRef, useState } from 'react'
 import { supabase } from '../supabase/config';
+import { useAudioPlayer } from 'expo-audio';
+import { useIsFocused } from '@react-navigation/native';
 
 const { width, height } = Dimensions.get('window');
+const audioSource = require('../assets/music/selva.mp3');
 
 export default function GameScreen() {
   const [score, setScore] = useState(0);
@@ -10,6 +13,34 @@ export default function GameScreen() {
   const [bugPosition, setBugPosition] = useState({ x: 0, y: 0 });
   const [showBug, setShowBug] = useState(false);
   const [gameActive, setGameActive] = useState(false);
+
+  // Audio para el juego
+  const player = useAudioPlayer(audioSource);
+
+  useEffect(() => {
+    if (player) {
+      player.loop = true; // Bucle infinito
+      player.play();      // Iniciar al entrar
+    }
+    
+    // Detiene la música cuando sales de la pantalla del juego
+    return () => {
+      if (player) {
+        player.pause();
+      }
+    };
+  }, [player]);
+
+  const isFocused = useIsFocused(); 
+  useEffect(() => {
+    if (!player) return;
+
+    if (isFocused) {
+      player.play();
+    } else {
+      player.pause(); // Si la pantalla pierde el foco, pausamos
+    }
+  }, [isFocused, player]);
 
   // Usamos un ref para el timer para poder limpiarlo correctamente
   const timerRef = useRef<any>(null);
@@ -29,11 +60,9 @@ export default function GameScreen() {
   const spawnBug = () => {
     const randomX = Math.floor(Math.random() * (width - 100));
     const randomY = Math.floor(Math.random() * (height - 250)) + 100;
-
     setBugPosition({ x: randomX, y: randomY });
     setShowBug(true);
   };
-
 
   const acierto = () => {
     if (!gameActive) return;
@@ -53,14 +82,12 @@ export default function GameScreen() {
     }
   };
 
-  
-  const endGame = async () => {
+ const endGame = async () => {
     setGameActive(false);
     setShowBug(false);
     clearInterval(timerRef.current);
 
     const finalScore = score;
-
     const { data: authData } = await supabase.auth.getUser();
     const user = authData?.user;
 
@@ -69,41 +96,35 @@ export default function GameScreen() {
       return;
     }
 
-    // Obtenemos el documento actual del usuario
+    // 1. Obtenemos el puntaje que ya existe
     const { data: userData } = await supabase
       .from('usuario')
       .select('scores')
       .eq('uid', user.id)
       .single();
 
-    const docActual = userData?.scores || {};
-    const gameId = `Partida_${Date.now()}`; 
+    const mejorPuntajePrevio = typeof userData?.scores === 'number' ? userData.scores : 0;
 
-    const nuevoPuntaje = {
-      puntos: finalScore,
-      fecha: new Date().toLocaleDateString(),
-    };
+    // 3. Solo actualizamos si el actual es mayor
+    if (finalScore > mejorPuntajePrevio) {
+      const { error } = await supabase
+        .from('usuario')
+        .update({ scores: finalScore }) // Guardamos solo el número
+        .eq('uid', user.id);
 
-    const nuevoDoc = {
-      ...docActual,
-      [gameId]: nuevoPuntaje
-    };
-
-    const { error } = await supabase
-      .from('usuario')
-      .update({ scores: nuevoDoc })
-      .eq('uid', user.id);
-
-    if (!error) {
-      Alert.alert("¡Game Over!", `Has cometido 3 errores.\nPuntuación final: ${finalScore}\nTu record ha sido guardado.`);
+      if (!error) {
+        Alert.alert("¡Nuevo Récord!", `¡Felicidades! Superaste tu marca anterior.\nNuevo récord: ${finalScore}`);
+      } else {
+        Alert.alert("Error", "No se pudo guardar el puntaje.");
+      }
     } else {
-      Alert.alert("Error", "No se pudo guardar el puntaje.");
+      Alert.alert("¡Game Over!", `Puntuación: ${finalScore}\nTu mejor récord sigue siendo: ${mejorPuntajePrevio}`);
     }
   };
 
   useEffect(() => {
     return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
+      clearInterval(timerRef.current);
     }
   }, []);
 

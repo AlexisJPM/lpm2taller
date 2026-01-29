@@ -2,12 +2,12 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 export default function Scores({ item }: any) {
+
     return (
         <View style={styles.itemContainer}>
 
-            <Text style={styles.valorPrincipal}> {item.nuevoPuntaje}</Text>
-            <Text style={styles.valorSecundario}>Puntaje: {item.puntos}</Text>
-            <Text style={styles.valorSecundario}>Fecha: {item.fecha}</Text>
+            <Text style={styles.valorPrincipal}>Usuario: {item.nombre}</Text>
+            <Text style={styles.valorSecundario}>Mejor Puntaje: {item.puntos}</Text>
             
         </View>
     );
@@ -25,7 +25,6 @@ const styles = StyleSheet.create({
     valorPrincipal: {
         fontSize: 18,
         fontWeight: 'bold',
-        textAlign:'center'
     },
 
     valorSecundario: {

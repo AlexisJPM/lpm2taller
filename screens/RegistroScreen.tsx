@@ -82,7 +82,7 @@ guardar( data.user.id)
 
 
             <TouchableOpacity style={styles.button} onPress={registro} >
-                <Text >Guardar</Text>
+                <Text style={{fontSize: 20, fontFamily:'juego'}}>Guardar</Text>
             </TouchableOpacity>
         </View>
     )
@@ -109,7 +109,8 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 25,
         justifyContent: "center",
-        margin: 20
+        margin: 20,
+        fontFamily:'juego'
     },
     button: {
         backgroundColor: "#A6CCBD",

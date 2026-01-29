@@ -1,19 +1,25 @@
 import { Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
+import { useFonts } from 'expo-font';
 
 
 export default function HomeScreen(  {navigation} : any  ) {
+
+  const [loaded, error] = useFonts({
+      'juego': require('../assets/fonts/Butterpop.otf'),
+    });  
+    
   return (
     
     <ImageBackground style={styles.container} source={{uri : "https://i.postimg.cc/Jzm2T07J/06-55-58-480-512.gif"}}>
       
-      <Text style={{color: 'white', fontSize: 40}}>Bienvenido</Text>
+      <Text style={{color: 'white', fontSize: 50, fontFamily:'juego',}}>Bienvenido</Text>
 
     <TouchableOpacity onPress={()=> navigation.navigate("Login")}
     
       style = {styles.btnLocal}
       >
-      <Text style={{fontSize: 30}}>Login</Text>
+      <Text style={{fontSize: 30, fontFamily:'juego'}}>Login</Text>
       
     </TouchableOpacity>
 
@@ -21,7 +27,7 @@ export default function HomeScreen(  {navigation} : any  ) {
       style = {styles.btnExterno}
       >
 
-        <Text style={{fontSize : 30}}>Registarse</Text>
+        <Text style={{fontSize : 30, fontFamily:'juego'}}>Registarse</Text>
 
     </TouchableOpacity>
 

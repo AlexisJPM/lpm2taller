@@ -2,9 +2,14 @@ import { StyleSheet, Text, Image, View, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { supabase } from '../supabase/config'
 import * as SecureStore from 'expo-secure-store';
+import { useFonts } from 'expo-font';
 
 
 export default function PerfilScreen({ navigation }: any) {
+  const [loaded, error] = useFonts({
+    'juego': require('../assets/fonts/Butterpop.otf'),
+  });
+
   const [user, setuser] = useState({} as usuario)
 
   type usuario = {
@@ -26,10 +31,10 @@ export default function PerfilScreen({ navigation }: any) {
 
   async function datosUser(uid: any) {
     const { data, error } = await supabase
-      .from('usuario') 
+      .from('usuario')
       .select()
       .eq('uid', uid)
-    
+
     if (data && data.length > 0) {
       setuser(data[0])
     }
@@ -47,9 +52,9 @@ export default function PerfilScreen({ navigation }: any) {
       <Text style={styles.title}>Perfil de Jugador</Text>
 
       <View style={styles.imageContainer}>
-        <Image 
-          style={styles.img} 
-          source={{ uri: "https://i.postimg.cc/NG4L2FNx/selfie.png" }} 
+        <Image
+          style={styles.img}
+          source={{ uri: "https://i.postimg.cc/NG4L2FNx/selfie.png" }}
         />
       </View>
 
@@ -90,6 +95,7 @@ const styles = StyleSheet.create({
     color: '#C5A059',
     marginTop: 40,
     textAlign: 'center',
+    fontFamily: 'juego'
   },
   imageContainer: {
     alignItems: 'center',
