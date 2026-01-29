@@ -5,14 +5,14 @@ import { View, Text, StyleSheet } from 'react-native';
 export default function Scores({ item }: any) {
     const [loaded, error] = useFonts({
         'juego': require('../assets/fonts/Butterpop.otf'),
-      });
+    });
 
     return (
         <View style={styles.itemContainer}>
 
             <Text style={styles.valorPrincipal}>Usuario: {item.nombre}</Text>
             <Text style={styles.valorSecundario}>Mejor Puntaje: {item.puntos}</Text>
-            
+
         </View>
     );
 }
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     valorPrincipal: {
         fontSize: 20,
         fontFamily: 'juego',
-        textAlign:'center',
+        textAlign: 'center',
         color: '#333',
     },
 

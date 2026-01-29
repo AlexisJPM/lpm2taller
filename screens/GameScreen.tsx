@@ -16,8 +16,8 @@ export default function GameScreen() {
   const [gameActive, setGameActive] = useState(false);
 
   const [loaded, fontError] = useFonts({
-      'juego': require('../assets/fonts/Butterpop.otf'),
-    });
+    'juego': require('../assets/fonts/Butterpop.otf'),
+  });
 
   // Audio para el juego
   const player = useAudioPlayer(audioSource);
@@ -27,7 +27,7 @@ export default function GameScreen() {
       player.loop = true; // Bucle infinito
       player.play();      // Iniciar al entrar
     }
-    
+
     // Detiene la música cuando sales de la pantalla del juego
     return () => {
       if (player) {
@@ -36,7 +36,7 @@ export default function GameScreen() {
     };
   }, [player]);
 
-  const isFocused = useIsFocused(); 
+  const isFocused = useIsFocused();
   useEffect(() => {
     if (!player) return;
 
@@ -75,7 +75,6 @@ export default function GameScreen() {
     setShowBug(false);
   };
 
- 
   const error = () => {
     if (!gameActive) return;
 
@@ -87,7 +86,7 @@ export default function GameScreen() {
     }
   };
 
- const endGame = async () => {
+  const endGame = async () => {
     setGameActive(false);
     setShowBug(false);
     clearInterval(timerRef.current);
@@ -101,7 +100,7 @@ export default function GameScreen() {
       return;
     }
 
-    // 1. Obtenemos el puntaje que ya existe
+    // Obtenemos el puntaje que ya existe
     const { data: userData } = await supabase
       .from('usuario')
       .select('scores')
@@ -110,11 +109,11 @@ export default function GameScreen() {
 
     const mejorPuntajePrevio = typeof userData?.scores === 'number' ? userData.scores : 0;
 
-    // 3. Solo actualizamos si el actual es mayor
+    // Solo actualiza si el actual es mayor
     if (finalScore > mejorPuntajePrevio) {
       const { error } = await supabase
         .from('usuario')
-        .update({ scores: finalScore }) // Guardamos solo el número
+        .update({ scores: finalScore })
         .eq('uid', user.id);
 
       if (!error) {
@@ -160,7 +159,7 @@ export default function GameScreen() {
           <TouchableOpacity
             style={[styles.bug, { left: bugPosition.x, top: bugPosition.y }]}
             onPress={(e) => {
-              e.stopPropagation(); // IMPORTANTE: evita que el toque cuente como error
+              e.stopPropagation();
               acierto();
             }}
           >
