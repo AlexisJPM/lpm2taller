@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { supabase } from '../supabase/config';
 import { useAudioPlayer } from 'expo-audio';
 import { useIsFocused } from '@react-navigation/native';
+import { useFonts } from 'expo-font';
 
 const { width, height } = Dimensions.get('window');
 const audioSource = require('../assets/music/selva.mp3');
@@ -13,6 +14,10 @@ export default function GameScreen() {
   const [bugPosition, setBugPosition] = useState({ x: 0, y: 0 });
   const [showBug, setShowBug] = useState(false);
   const [gameActive, setGameActive] = useState(false);
+
+  const [loaded, fontError] = useFonts({
+      'juego': require('../assets/fonts/Butterpop.otf'),
+    });
 
   // Audio para el juego
   const player = useAudioPlayer(audioSource);
@@ -183,13 +188,13 @@ const styles = StyleSheet.create({
     marginTop: 50,
   },
   scoreText: {
-    fontSize: 22,
-    fontWeight: 'bold',
+    fontSize: 25,
     color: 'white',
     backgroundColor: 'rgba(0,0,0,0.6)',
     paddingHorizontal: 15,
     paddingVertical: 8,
     borderRadius: 10,
+    fontFamily: 'juego'
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
@@ -207,8 +212,8 @@ const styles = StyleSheet.create({
   },
   btnText: {
     color: 'black',
-    fontSize: 20,
-    fontWeight: 'bold',
+    fontSize: 30,
+    fontFamily: 'juego'
   },
   bug: {
     position: 'absolute',

@@ -77,7 +77,7 @@ export default function PerfilScreen({ navigation }: any) {
       </View>
 
       <TouchableOpacity style={styles.logoutButton} onPress={cerrarSesion}>
-        <Text style={styles.logoutText}>Cerrar sesión</Text>
+        <Text style={styles.logoutText}>SALIR</Text>
       </TouchableOpacity>
     </View>
   )
@@ -90,8 +90,7 @@ const styles = StyleSheet.create({
     padding: 24,
   },
   title: {
-    fontSize: 24,
-    fontWeight: '700',
+    fontSize: 30,
     color: '#C5A059',
     marginTop: 40,
     textAlign: 'center',
@@ -125,14 +124,16 @@ const styles = StyleSheet.create({
     paddingBottom: 8,
   },
   label: {
-    fontWeight: '700',
-    width: 90,
+    width: 95,
+    fontFamily: 'juego',
+    fontSize:20,
+    color: '#333',
   },
   value: {
     flex: 1,
     color: '#333',
-    fontSize: 16,
-    fontWeight: '500'
+    fontSize: 18,
+    fontFamily: 'juego',
   },
   logoutButton: {
     marginTop: 40,
@@ -144,7 +145,7 @@ const styles = StyleSheet.create({
     borderColor: '#C5A059',
   },
   logoutText: {
-    fontSize: 16,
-    fontWeight: '700',
+    fontSize: 20,
+    fontFamily: 'juego',
   },
 })

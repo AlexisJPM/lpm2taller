@@ -1,7 +1,11 @@
+import { useFonts } from 'expo-font';
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 export default function Scores({ item }: any) {
+    const [loaded, error] = useFonts({
+        'juego': require('../assets/fonts/Butterpop.otf'),
+      });
 
     return (
         <View style={styles.itemContainer}>
@@ -23,12 +27,15 @@ const styles = StyleSheet.create({
         borderColor: '#C5A059',
     },
     valorPrincipal: {
-        fontSize: 18,
-        fontWeight: 'bold',
+        fontSize: 20,
+        fontFamily: 'juego',
+        textAlign:'center',
+        color: '#333',
     },
 
     valorSecundario: {
-        fontSize: 14,
-        fontWeight: 'bold',
+        fontSize: 18,
+        fontFamily: 'juego',
+        color: '#333',
     }
 });
