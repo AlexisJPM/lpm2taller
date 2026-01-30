@@ -1,9 +1,10 @@
 import { StyleSheet, Text, View, TouchableOpacity, ActivityIndicator } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { supabase } from '../supabase/config'
 import * as SecureStore from 'expo-secure-store';
 import { useFonts } from 'expo-font';
 import Avatars from '../components/Avatars';
+import { useFocusEffect } from '@react-navigation/native';
 
 export default function PerfilScreen({ navigation }: any) {
   const [loaded] = useFonts({
@@ -12,10 +13,13 @@ export default function PerfilScreen({ navigation }: any) {
 
   const [user, setUser] = useState<any>(null);
 
-  useEffect(() => {
-    leerUser();
-  }, []);
-
+ 
+  useFocusEffect(
+    // Es vital envolver la lógica en useCallback para evitar bucles infinitos
+    useCallback(() => {
+      leerUser();
+    }, [])
+  );
 
   async function leerUser() {
     const { data: { session } } = await supabase.auth.getSession();
@@ -82,7 +86,6 @@ export default function PerfilScreen({ navigation }: any) {
           <Text style={styles.value}>{user.email}</Text>
         </View>
 
-        {/* Campo de Puntaje corregido */}
         <View style={[styles.row, { borderBottomWidth: 0, marginBottom: 0 }]}>
           <Text style={styles.label}>Puntos:</Text>
           <Text style={[styles.value, { color: '#C5A059', fontSize: 22 }]}>

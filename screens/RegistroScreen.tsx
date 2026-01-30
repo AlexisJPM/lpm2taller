@@ -173,7 +173,6 @@ export default function RegistroScreen({ navigation }: any) {
         value={email}
       />
 
-
       <TouchableOpacity style={styles.button} onPress={() => registro()} >
         <Text style={{ fontSize: 20, fontFamily: 'juego' }}>Guardar</Text>
       </TouchableOpacity>
