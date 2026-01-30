@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "app_taller",
-    "slug": "app_taller",
+    "name": "insect_game",
+    "slug": "insect_game",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/bicho.png",
