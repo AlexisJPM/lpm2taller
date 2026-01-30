@@ -11,6 +11,7 @@ import HomeScreen from '../screens/HomeScreen';
 import GameScreen from '../screens/GameScreen';
 import ScoreScreen from '../screens/ScoreScreen';
 import PerfilScreen from '../screens/PerfilScreen';
+import EditarPerfilScreen from '../screens/EditarPerfilScreen';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -35,6 +36,7 @@ function MyTabs() {
             <Tab.Screen name="Game" component={GameScreen} options={{ headerShown: false,  tabBarIcon: ()=> <MaterialCommunityIcons name="gamepad-variant" size={24} color="#0cf54666" /> }}
             />
             <Tab.Screen name="Score" component={ScoreScreen} options={{ headerShown: false, tabBarIcon: ()=> <MaterialIcons name="sports-score" size={24} color="#f1080866" />}}/>
+            <Tab.Screen name="Editar" component={EditarPerfilScreen} options={{ headerShown: false, tabBarIcon: ()=> <MaterialIcons name="sports-score" size={24} color="#f1080866" />}}/>
         </Tab.Navigator>
     );
 }

@@ -1,21 +1,35 @@
-import { StyleSheet, Text, Image, View, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, Image, View, TouchableOpacity, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { supabase } from '../supabase/config'
 import * as SecureStore from 'expo-secure-store';
 import { useFonts } from 'expo-font';
+import Avatars from '../components/Avatars';
+import * as ImagePicker from 'expo-image-picker';
 
 
 export default function PerfilScreen({ navigation }: any) {
   const [loaded, error] = useFonts({
     'juego': require('../assets/fonts/Butterpop.otf'),
   });
-
+ 
   const [user, setuser] = useState({} as usuario)
+  const [imageUrl, setImageUrl] = useState<string | null>(null)
+
+  useEffect(() => {
+  if (user?.avatar) {
+    const { data } = supabase.storage
+      .from('Avatar')
+      .getPublicUrl(user.avatar)
+
+    setImageUrl(data.publicUrl)
+  }
+}, [user.avatar])
 
   type usuario = {
     nombre: String,
     edad: number,
-    email: string
+    email: string,
+    avatar: string
   }
 
   useEffect(() => {
@@ -47,16 +61,30 @@ export default function PerfilScreen({ navigation }: any) {
     navigation.navigate("Home")
   }
 
+ function url(){
+  const { data } = supabase.storage
+  .from('Avatar')
+  .getPublicUrl(user.avatar)
+
+const imageUrl = data.publicUrl
+ }
+  
+    
+  
   return (
     <View style={styles.container}>
+     
       <Text style={styles.title}>Perfil de Jugador</Text>
 
-      <View style={styles.imageContainer}>
-        <Image
-          style={styles.img}
-          source={{ uri: "https://i.postimg.cc/NG4L2FNx/selfie.png" }}
-        />
-      </View>
+ <View >
+ {imageUrl && (
+  <Image
+    source={{ uri: imageUrl }}
+    style={{ width: 120, height: 120, borderRadius: 60 }}
+  />
+)}
+                    </View>
+       
 
       <View style={styles.card}>
         <View style={styles.row}>
@@ -75,6 +103,7 @@ export default function PerfilScreen({ navigation }: any) {
           <Text style={styles.value}>{user.email}</Text>
         </View>
       </View>
+
 
       <TouchableOpacity style={styles.logoutButton} onPress={cerrarSesion}>
         <Text style={styles.logoutText}>SALIR</Text>
@@ -148,4 +177,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontFamily: 'juego',
   },
+  avatarBoton: {
+      alignItems: "center",
+      marginBottom: 16
+    },
+    
 })

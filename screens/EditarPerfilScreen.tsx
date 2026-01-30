@@ -7,7 +7,7 @@ import { decode } from 'base64-arraybuffer'
 import { File, Directory, Paths } from 'expo-file-system';
 import * as ImagePicker from 'expo-image-picker';
 
-export default function RegistroScreen({navigation} : any) {
+export default function EditarPerfilScreen({navigation} : any) {
     
     const [nombre, setnombre] = useState("")
    const [password, setpassword] = useState("")
@@ -42,10 +42,9 @@ async function registro(){
 
   const { error } = await supabase
     .from('usuario')
-    .insert({
+    .update({
       uid: uid,
       nombre: nombre,
-      email: email,
       edad: edad,
       avatar: publicUrlData.publicUrl // Guardamos la URL de internet, no la del celular
     });
@@ -159,20 +158,7 @@ async function registro(){
                 value={edad.toString()}
                 keyboardType='numeric'
             />
-            <TextInput
-                placeholder='Cree su contraseña'
-                style={styles.input}
-                onChangeText={(texto) => setpassword(texto)}
-                value={password}
-                
-
-            />
-            <TextInput
-                placeholder='Ingresar su correo'
-                style={styles.input}
-                onChangeText={(texto) => setemail(texto)}
-                value={email}
-            />
+          
 
 
             <TouchableOpacity style={styles.button} onPress={()=> registro()} >
