@@ -1,97 +1,90 @@
-import { StyleSheet, Text, Image, View, TouchableOpacity, Alert } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, ActivityIndicator } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { supabase } from '../supabase/config'
 import * as SecureStore from 'expo-secure-store';
 import { useFonts } from 'expo-font';
 import Avatars from '../components/Avatars';
-import * as ImagePicker from 'expo-image-picker';
-
 
 export default function PerfilScreen({ navigation }: any) {
-  const [loaded, error] = useFonts({
+  const [loaded] = useFonts({
     'juego': require('../assets/fonts/Butterpop.otf'),
   });
- 
-  const [user, setuser] = useState({} as usuario)
-  const [imageUrl, setImageUrl] = useState<string | null>(null)
+
+  const [user, setUser] = useState<any>(null);
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
 
   useEffect(() => {
-  if (user?.avatar) {
-    const { data } = supabase.storage
-      .from('Avatar')
-      .getPublicUrl(user.avatar)
+    leerUser();
+  }, []);
 
-    setImageUrl(data.publicUrl)
-  }
-}, [user.avatar])
-
-  type usuario = {
-    nombre: String,
-    edad: number,
-    email: string,
-    avatar: string
-  }
 
   useEffect(() => {
-    leerUser()
-  }, [])
+    if (user?.avatar) {
+      const { data } = supabase.storage
+        .from('Avatar')
+        .getPublicUrl(user.avatar);
+
+      if (data) {
+        setImageUrl(data.publicUrl);
+      }
+    }
+  }, [user]);
 
   async function leerUser() {
-    const { data, error } = await supabase.auth.getSession()
-    if (data.session) {
-      datosUser(data.session.user.id)
+    const { data: { session } } = await supabase.auth.getSession();
+    if (session) {
+      datosUser(session.user.id);
     }
   }
 
   async function datosUser(uid: any) {
-    const { data, error } = await supabase
-      .from('usuario')
-      .select()
-      .eq('uid', uid)
+    try {
+      const { data, error } = await supabase
+        .from('usuario')
+        .select('nombre, edad, email, avatar, scores') 
+        .eq('uid', uid)
+        .maybeSingle();
 
-    if (data && data.length > 0) {
-      setuser(data[0])
+      if (error) throw error;
+      if (data) {
+        setUser(data);
+      }
+    } catch (error) {
+      console.error("Error cargando perfil:", error);
     }
   }
 
   async function cerrarSesion() {
-    const { error } = await supabase.auth.signOut()
-    await SecureStore.deleteItemAsync('token')
-
-    navigation.navigate("Home")
+    await supabase.auth.signOut();
+    await SecureStore.deleteItemAsync('token');
+    navigation.navigate("Home");
   }
 
- function url(){
-  const { data } = supabase.storage
-  .from('Avatar')
-  .getPublicUrl(user.avatar)
 
-const imageUrl = data.publicUrl
- }
-  
-    
-  
+  if (!user || !loaded) {
+    return (
+      <View style={[styles.container, { justifyContent: 'center' }]}>
+        <ActivityIndicator size="large" color="#C5A059" />
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
-     
       <Text style={styles.title}>Perfil de Jugador</Text>
 
- <View >
- {imageUrl && (
-  <Image
-    source={{ uri: imageUrl }}
-    style={{ width: 120, height: 120, borderRadius: 60 }}
-  />
-)}
-                    </View>
-       
+      <View style={styles.imageContainer}>
+        <Avatars 
+          uri={imageUrl} 
+          size={140} 
+        />
+      </View>
 
       <View style={styles.card}>
         <View style={styles.row}>
           <Text style={styles.label}>Nombre:</Text>
           <Text style={styles.value}>{user.nombre}</Text>
         </View>
-
 
         <View style={styles.row}>
           <Text style={styles.label}>Edad:</Text>
@@ -102,14 +95,21 @@ const imageUrl = data.publicUrl
           <Text style={styles.label}>Correo:</Text>
           <Text style={styles.value}>{user.email}</Text>
         </View>
-      </View>
 
+        {/* Campo de Puntaje corregido */}
+        <View style={[styles.row, { borderBottomWidth: 0, marginBottom: 0 }]}>
+          <Text style={styles.label}>Puntos:</Text>
+          <Text style={[styles.value, { color: '#C5A059', fontSize: 22 }]}>
+            {user.scores || 0} pts
+          </Text>
+        </View>
+      </View>
 
       <TouchableOpacity style={styles.logoutButton} onPress={cerrarSesion}>
         <Text style={styles.logoutText}>SALIR</Text>
       </TouchableOpacity>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -129,11 +129,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginVertical: 30,
-  },
-  img: {
-    width: 140,
-    height: 140,
-    borderRadius: 70,
   },
   card: {
     backgroundColor: "#7EA296",
@@ -155,7 +150,7 @@ const styles = StyleSheet.create({
   label: {
     width: 95,
     fontFamily: 'juego',
-    fontSize:20,
+    fontSize: 20,
     color: '#333',
   },
   value: {
@@ -176,10 +171,6 @@ const styles = StyleSheet.create({
   logoutText: {
     fontSize: 20,
     fontFamily: 'juego',
+    color: 'white'
   },
-  avatarBoton: {
-      alignItems: "center",
-      marginBottom: 16
-    },
-    
-})
+});
