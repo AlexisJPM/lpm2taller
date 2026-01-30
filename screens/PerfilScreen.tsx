@@ -11,24 +11,11 @@ export default function PerfilScreen({ navigation }: any) {
   });
 
   const [user, setUser] = useState<any>(null);
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
 
   useEffect(() => {
     leerUser();
   }, []);
 
-
-  useEffect(() => {
-    if (user?.avatar) {
-      const { data } = supabase.storage
-        .from('Avatar')
-        .getPublicUrl(user.avatar);
-
-      if (data) {
-        setImageUrl(data.publicUrl);
-      }
-    }
-  }, [user]);
 
   async function leerUser() {
     const { data: { session } } = await supabase.auth.getSession();
@@ -60,7 +47,6 @@ export default function PerfilScreen({ navigation }: any) {
     navigation.navigate("Home");
   }
 
-
   if (!user || !loaded) {
     return (
       <View style={[styles.container, { justifyContent: 'center' }]}>
@@ -75,7 +61,7 @@ export default function PerfilScreen({ navigation }: any) {
 
       <View style={styles.imageContainer}>
         <Avatars 
-          uri={imageUrl} 
+          uri={user.avatar} 
           size={140} 
         />
       </View>
